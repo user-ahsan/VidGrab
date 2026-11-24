@@ -10,7 +10,10 @@ function ProjectMedia({ project }) {
   if (project.image) {
     return <img src={project.image} alt={project.title} />
   }
-  return <video src={project.video} autoPlay muted loop playsInline />
+  if (project.video) {
+    return <video src={project.video} autoPlay muted loop playsInline />
+  }
+  return null
 }
 
 export default function ProjectsList({ projects }) {
@@ -68,7 +71,11 @@ export default function ProjectsList({ projects }) {
           </>
         )
 
-        return p.caseStudy ? (
+        return p.href ? (
+          <MotionLink key={p.num} href={p.href} {...rowProps}>
+            {content}
+          </MotionLink>
+        ) : p.caseStudy ? (
           <MotionLink key={p.num} href={`/projects/${p.slug}`} {...rowProps}>
             {content}
           </MotionLink>

@@ -1,30 +1,29 @@
-import { notFound } from 'next/navigation'
-import { PROJECTS, getCaseStudyProjects } from '../data'
-import ProjectDetail from './ProjectDetail'
+import { notFound, redirect } from 'next/navigation'
+import { PLATFORMS, getPlatform } from '../data'
+
+/*
+  Old portfolio case-study URLs (/projects/<slug>) no longer exist. Each
+  platform slug redirects to its downloader page instead.
+*/
 
 export function generateStaticParams() {
-  return getCaseStudyProjects().map((p) => ({ slug: p.slug }))
+  return PLATFORMS.map((p) => ({ slug: p.slug }))
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
-  const project = PROJECTS.find((p) => p.slug === slug)
-  if (!project || !project.caseStudy) return {}
+  const platform = getPlatform(slug)
+  if (!platform) return {}
   return {
-    title: `${project.title}, case study | HX Codes`,
-    description: project.caseStudy.tagline,
+    title: `${platform.title} Downloader | VidGrab`,
+    description: platform.desc,
   }
 }
 
 export default async function ProjectPage({ params }) {
   const { slug } = await params
-  const project = PROJECTS.find((p) => p.slug === slug)
-  if (!project || !project.caseStudy) notFound()
+  const platform = getPlatform(slug)
+  if (!platform) notFound()
 
-  const caseStudyProjects = getCaseStudyProjects()
-  const index = caseStudyProjects.findIndex((p) => p.slug === slug)
-  const prev = caseStudyProjects[(index - 1 + caseStudyProjects.length) % caseStudyProjects.length]
-  const next = caseStudyProjects[(index + 1) % caseStudyProjects.length]
-
-  return <ProjectDetail project={project} prev={prev} next={next} />
+  redirect(platform.href)
 }

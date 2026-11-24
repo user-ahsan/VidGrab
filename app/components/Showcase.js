@@ -1,5 +1,6 @@
 'use client'
 import { useRef } from 'react'
+import Link from 'next/link'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useReducedMotion } from './hooks'
 
@@ -24,6 +25,33 @@ function ShowcaseCard({ site, index }) {
   const drift = useSpring(rawDrift, { stiffness: 120, damping: 30, mass: 0.4 })
 
   const stacked = index % 2 === 1
+  const internal = site.url.startsWith('/')
+
+  const frameInner = (
+    <>
+      <span className="shw-chrome">
+        <span className="shw-dots">
+          <i /><i /><i />
+        </span>
+        <span className="shw-url">{site.domain}</span>
+      </span>
+
+      <span className="shw-viewport">
+        <motion.img
+          src={site.image}
+          alt={`${site.name} download`}
+          width={1760}
+          height={1100}
+          loading="lazy"
+          decoding="async"
+          style={reduced ? undefined : { y: drift }}
+        />
+        <span className="shw-open">
+          {internal ? 'Open downloader' : 'Open site'} <em>&#8599;</em>
+        </span>
+      </span>
+    </>
+  )
 
   return (
     <motion.article
@@ -34,35 +62,25 @@ function ShowcaseCard({ site, index }) {
       viewport={{ once: true, margin: '0px 0px -60px 0px' }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
     >
-      <a
-        className="shw-frame"
-        href={site.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Open ${site.name} in a new tab`}
-      >
-        <span className="shw-chrome">
-          <span className="shw-dots">
-            <i /><i /><i />
-          </span>
-          <span className="shw-url">{site.domain}</span>
-        </span>
-
-        <span className="shw-viewport">
-          <motion.img
-            src={site.image}
-            alt={`${site.name} homepage`}
-            width={1760}
-            height={1100}
-            loading="lazy"
-            decoding="async"
-            style={reduced ? undefined : { y: drift }}
-          />
-          <span className="shw-open">
-            Open site <em>&#8599;</em>
-          </span>
-        </span>
-      </a>
+      {internal ? (
+        <Link
+          className="shw-frame"
+          href={site.url}
+          aria-label={`Open ${site.name} downloader`}
+        >
+          {frameInner}
+        </Link>
+      ) : (
+        <a
+          className="shw-frame"
+          href={site.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open ${site.name} in a new tab`}
+        >
+          {frameInner}
+        </a>
+      )}
 
       <div className="shw-meta">
         <span className="shw-index">{String(index + 1).padStart(2, '0')}</span>

@@ -21,9 +21,25 @@ const mono = Geist_Mono({
 })
 
 export const metadata = {
-  title: 'Hammas, Web & App Developer',
+  // No dedicated VidGrab domain yet; the owner's portfolio stands in as the
+  // base for absolute Open Graph URLs until one is set.
+  metadataBase: new URL('https://ahsanali.cc'),
+  title: 'VidGrab — Download Videos from YouTube, Instagram, TikTok & More',
   description:
-    'Freelance web and app developer. Product engineering, interface design, and sites that ship on time.',
+    'VidGrab downloads public videos from YouTube, Instagram, TikTok, Facebook, X and more. No sign-up. No watermark on TikTok. MP4 up to 4K and MP3 up to 320kbps.',
+  openGraph: {
+    title: 'VidGrab — Download Videos from YouTube, Instagram, TikTok & More',
+    description:
+      'VidGrab downloads public videos from YouTube, Instagram, TikTok, Facebook, X and more. No sign-up. No watermark on TikTok. MP4 up to 4K and MP3 up to 320kbps.',
+    type: 'website',
+    siteName: 'VidGrab',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'VidGrab — Download Videos from YouTube, Instagram, TikTok & More',
+    description:
+      'VidGrab downloads public videos from YouTube, Instagram, TikTok, Facebook, X and more. No sign-up. No watermark on TikTok. MP4 up to 4K and MP3 up to 320kbps.',
+  },
 }
 
 export default function RootLayout({ children }) {

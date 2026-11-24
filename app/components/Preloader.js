@@ -9,11 +9,11 @@ export default function Preloader() {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    if (sessionStorage.getItem('hx-loaded')) {
+    if (sessionStorage.getItem('vidgrab-loaded')) {
       setShow(false)
       return
     }
-    sessionStorage.setItem('hx-loaded', '1')
+    sessionStorage.setItem('vidgrab-loaded', '1')
   }, [])
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function Preloader() {
         >
           <div className="preloader-inner">
             <div className="preloader-mark">
-              HX Codes
+              VIDGRAB
             </div>
             <div className="preloader-track">
               <span className="preloader-fill" style={{ transform: `scaleX(${count / 100})` }} />

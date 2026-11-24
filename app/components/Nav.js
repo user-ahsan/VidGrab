@@ -17,9 +17,9 @@ export default function Nav() {
   return (
     <nav className="site-nav" ref={navRef}>
       <Link href="/" className="nav-logo">
-        <span data-scramble>HX CODES</span><span style={{ color: 'var(--muted)' }}>.</span>
+        <span data-scramble>VIDGRAB</span><span style={{ color: 'var(--muted)' }}>.</span>
       </Link>
-      <Link href="/#contact" className="nav-cta" data-magnetic data-scramble>Hire Me</Link>
+      <Link href="/#downloader" className="nav-cta" data-magnetic data-scramble>Download now</Link>
     </nav>
   )
 }
